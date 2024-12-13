@@ -3,11 +3,9 @@
     <h1>Memory Game</h1>
 </div>
 
-Welcome to the **Memory Game** App!
-
-This is a .NET project designed to demonstrate building a Blazor application that manipulates the state of a complex UI.
-
 ## Requirements
+
+This application fulfills the following [The C# Academy - Memory Game](https://thecsharpacademy.com/project/40/memory-game) project requirements:
 
 - [ ] Your memory game should have a timer.
 - [ ] Once a game is finished it should record the date it was played and the time it took to finish in a "games" table.
@@ -19,6 +17,7 @@ This is a .NET project designed to demonstrate building a Blazor application tha
 
 ## Challenges
 
+This project has the following challenges:
 - [ ] Add difficulty levels to your game: more cards.
 - [ ] Add a game against the clock: How many cards can the user match in a minute?
 - [ ] Add a search functionality to the games list.
