@@ -1,0 +1,29 @@
+﻿<div>
+    @if(Board is null)
+    {
+        <LoadingSpinner />
+    }
+    else
+    {
+        @foreach (var card in Board.Cards)
+        {
+            <GameCard Card="card" OnCardClicked="HandleClickedCard" />
+        }
+
+    }
+</div>
+
+@code {
+    private Board? Board { get; set; }
+
+    protected override Task OnInitializedAsync()
+    {
+        Board = new Board();
+        return base.OnInitializedAsync();
+    }
+
+    private async Task HandleClickedCard(Card card)
+    {
+        card.SelectCard();
+    }
+}

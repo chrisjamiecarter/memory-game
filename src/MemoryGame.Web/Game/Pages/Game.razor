@@ -1,0 +1,20 @@
+﻿@page "/game"
+@rendermode InteractiveServer
+
+@if(!_gameStarted)
+{
+    <button @onclick="StartNewGame">Start</button>
+}
+else
+{
+    <GameBoard />
+}
+
+@code {
+    private bool _gameStarted = false;
+
+    private void StartNewGame()
+    {
+        _gameStarted = true;
+    }
+}

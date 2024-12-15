@@ -1,4 +1,4 @@
-using MemoryGame.Web.Components;
+using MemoryGame.Web.Shared.Components;
 
 namespace MemoryGame.Web;
 public class Program

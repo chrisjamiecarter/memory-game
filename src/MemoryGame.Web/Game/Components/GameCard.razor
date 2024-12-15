@@ -1,0 +1,24 @@
+﻿<div @onclick="() => OnCardClicked.InvokeAsync(Card)">
+    @if(Card != null)
+    {
+        @if(Card.IsMatched || Card.IsSelected)
+        {
+            <div>
+                @Card.Front
+            </div>
+        }
+        else
+        {
+            <div>
+                @Card.Back
+            </div>
+        }
+    }
+</div>
+
+
+@code {
+    [Parameter] public Card? Card { get; set; }
+    [Parameter] public EventCallback<Card> OnCardClicked { get; set; }
+
+}
