@@ -58,3 +58,54 @@ h1:focus {
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
 }
+
+.game-board {
+  position: relative;
+  height: 100%;
+}
+
+.game-card {
+  float: left;
+  height: 5rem;
+  padding: 0.25rem;
+  text-align: center;
+  display: block;
+  position: relative;
+  cursor: pointer;
+  width: 10rem;
+  z-index: 50;
+}
+
+.game-card-body {
+  height: 100%;
+  width: 100%;
+  display: block;
+  transform-style: preserve-3d;
+  transition: .4s ease-in-out;
+  background: #F0F0F0;
+}
+
+.selected, .matched {
+  transform: rotateY(180deg);
+}
+
+.front, .back {
+  border: 0.025rem solid #0A0A0A;
+  backface-visibility: hidden;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.front {
+  transform: rotateY(-180deg);
+}
+
+.back {
+  transform: rotateX(0);
+}

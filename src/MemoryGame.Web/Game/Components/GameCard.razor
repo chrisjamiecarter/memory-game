@@ -1,18 +1,18 @@
-﻿<div @onclick="() => OnCardClicked.InvokeAsync(Card)">
+﻿<div class="game-card" @onclick="() => OnCardClicked.InvokeAsync(Card)">
     @if(Card != null)
     {
-        @if(Card.IsMatched || Card.IsSelected)
-        {
-            <div>
-                @Card.Front
+        <div class="game-card-body@(Card.IsSelected ? " selected" : "") @(Card.IsMatched ? " matched" : "")">
+            <div class="front">
+                <div class="card-image">
+                    @Card.Front
+                </div>
             </div>
-        }
-        else
-        {
-            <div>
-                @Card.Back
+            <div class ="back">
+                <div class="card-image">
+                    @Card.Back
+                </div>
             </div>
-        }
+        </div>
     }
 </div>
 
@@ -20,5 +20,4 @@
 @code {
     [Parameter] public Card? Card { get; set; }
     [Parameter] public EventCallback<Card> OnCardClicked { get; set; }
-
 }
