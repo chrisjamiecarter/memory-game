@@ -21,7 +21,7 @@
 </div>
 
 @code {
-    private Board? Board { get; set; }
+    [Parameter] public Board? Board { get; set; }
 
     private Card? FirstCard { get; set; }
     private Card? SecondCard { get; set; }
@@ -31,12 +31,6 @@
     private bool IsGameOver = false;
 
     private bool IsMatching = false;
-
-    protected override Task OnInitializedAsync()
-    {
-        Board = new Board();
-        return base.OnInitializedAsync();
-    }
 
     private async Task HandleClickedCard(Card card)
     {

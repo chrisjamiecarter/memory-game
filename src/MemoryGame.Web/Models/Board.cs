@@ -1,14 +1,16 @@
-﻿namespace MemoryGame.Web.Models;
+﻿using MemoryGame.Web.Enums;
+
+namespace MemoryGame.Web.Models;
 
 public class Board
 {
-    private readonly int _size = 2;
+    private readonly string[] _symbols = ["!", "$", "%", "*", "@", "#", "|", "~", "=", "+", "&", "£"];
 
-    private readonly string[] _symbols = ["!", "$", "%", "*"];
-
-    public Board()
+    public Board(GameDifficulty difficulty)
     {
-        for (int i = 0; i < _size; i++)
+        int size = GetBoardSize(difficulty);
+
+        for (int i = 0; i < size; i++)
         {
             Cards.AddRange(Card.CreatePair(_symbols[i]));
         }
@@ -17,4 +19,14 @@ public class Board
     }
 
     public List<Card> Cards { get; set; } = [];
+
+    private int GetBoardSize(GameDifficulty difficulty)
+    {
+        return difficulty switch
+        {
+            GameDifficulty.Easy => 6,
+            GameDifficulty.Hard => 12,
+            _ => 8,
+        };
+    }
 }
