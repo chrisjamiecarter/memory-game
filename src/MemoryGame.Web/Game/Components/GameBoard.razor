@@ -5,16 +5,32 @@
     }
     else
     {
-        @foreach (var card in Board.Cards)
+        @if (IsGameOver)
         {
-            <GameCard Card="card" OnCardClicked="HandleClickedCard" />
+            <h1>Game Over</h1>
+            <h3>Score = @(Moves)</h3>
         }
-
+        else
+        {
+            @foreach (var card in Board.Cards)
+            {
+                <GameCard Card="card" OnCardClicked="HandleClickedCard" />
+            }
+        }
     }
 </div>
 
 @code {
     private Board? Board { get; set; }
+
+    private Card? FirstCard { get; set; }
+    private Card? SecondCard { get; set; }
+
+    private int Moves { get; set; } = 0;
+
+    private bool IsGameOver = false;
+
+    private bool IsMatching = false;
 
     protected override Task OnInitializedAsync()
     {
@@ -24,6 +40,54 @@
 
     private async Task HandleClickedCard(Card card)
     {
+        if (IsMatching || card.IsMatched || card.IsSelected)
+        {
+            return;
+        }
+
         card.SelectCard();
+
+        if (FirstCard is null)
+        {
+            FirstCard = card;
+            return;
+        }
+
+        SecondCard = card;
+
+        Moves++;
+
+        IsMatching = true;
+        await Task.Delay(1000);
+
+        bool isMatch = CheckForMatch(FirstCard, SecondCard);
+
+        if (isMatch)
+        {
+            FirstCard.MatchCard();
+            SecondCard.MatchCard();
+        }
+        else
+        {
+            FirstCard.SelectCard();
+            SecondCard.SelectCard();
+        }
+
+        FirstCard = null;
+        SecondCard = null;
+
+        IsGameOver = CheckForGameOver(Board!.Cards);
+
+        IsMatching = false;
+    }
+
+    private static bool CheckForMatch(Card first, Card second)
+    {
+        return first.Id == second.Id;
+    }
+
+    private static bool CheckForGameOver(List<Card> cards)
+    {
+        return cards.All(x => x.IsMatched);
     }
 }

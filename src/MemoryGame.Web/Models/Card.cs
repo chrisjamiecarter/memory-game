@@ -2,9 +2,9 @@
 
 public class Card
 {
-    private Card(string front)
+    private Card(Guid id, string front)
     {
-        Id = Guid.NewGuid();
+        Id = id;
         Front = front;
         Back = "?";
         IsMatched = false;
@@ -21,13 +21,19 @@ public class Card
 
     public bool IsSelected { get; private set; }
 
-    public static Card Create(string front)
+    public static Card[] CreatePair(string front)
     {
-        return new Card(front);
+        var id = Guid.NewGuid();
+        return [new Card(id, front), new Card(id, front)];
     }
 
     public void SelectCard()
     {
         IsSelected = !IsSelected;
+    }
+
+    public void MatchCard()
+    {
+        IsMatched = true;
     }
 }

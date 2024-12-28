@@ -4,14 +4,13 @@ public class Board
 {
     private readonly int _size = 2;
 
+    private readonly string[] _symbols = ["!", "$", "%", "*"];
+
     public Board()
     {
         for (int i = 0; i < _size; i++)
         {
-            for (int j = 0; j < 2; j++)
-            {
-                Cards.Add(Card.Create("*"));
-            }
+            Cards.AddRange(Card.CreatePair(_symbols[i]));
         }
 
         Cards = [.. Cards.OrderBy(x => Random.Shared.Next())];
