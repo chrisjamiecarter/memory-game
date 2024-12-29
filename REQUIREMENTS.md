@@ -12,7 +12,7 @@ This application fulfills the following [The C# Academy - Memory Game](https://t
 - [ ] You should have just one level of difficulty.
 - [ ] Your game should have 9 cards.
 - [ ] The app should have two main components: the game and the games list.
-- [ ] UsersYou shouldn't need a database for the game functionality. All the information about the cards can be in lists in the code base.
+- [ ] You shouldn't need a database for the game functionality. All the information about the cards can be in lists in the code base.
 - [ ] Since it only requires basic operations, use Entity Framework for recording game history.
 
 ## Challenges
