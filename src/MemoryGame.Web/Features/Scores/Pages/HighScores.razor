@@ -1,0 +1,38 @@
+﻿@page "/high-scores"
+@inject GetScoresHandler GetScoresHandler
+
+<h1>High Scores</h1>
+
+<table>
+    <thead>
+        <tr>
+            <th>Username</th>
+            <th>Time</th>
+            <th>Moves</th>
+            <th>Difficulty</th>
+        </tr>
+    </thead>
+    <tbody>
+@*         @if (HighScores != null)
+        {
+            @foreach (var score in HighScores)
+            {
+                <tr>
+                    <td>@score.Username</td>
+                    <td>@score.TimeElapsed</td>
+                    <td>@score.Moves</td>
+                    <td>@score.Difficulty</td>
+                </tr>
+            }
+        } *@
+    </tbody>
+</table>
+
+@code {
+    // private List<Score> HighScores;
+
+    // protected override async Task OnInitializedAsync()
+    // {
+    //     HighScores = await GetScoresHandler.Handle(new GetScoresRequest());
+    // }
+}

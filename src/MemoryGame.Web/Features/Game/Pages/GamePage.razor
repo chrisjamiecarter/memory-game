@@ -1,0 +1,158 @@
+﻿@page "/game/{DifficultyString}"
+@rendermode InteractiveServer
+@inject StartGameHandler StartGameHandler
+@inject MatchCardsHandler MatchCardsHandler
+@inject SaveScoreHandler SaveScoreHandler
+@inject NavigationManager NavigationManager
+
+<PageTitle>Memory Game - Play</PageTitle>
+
+<h1>Memory Game</h1>
+
+@if (Board is null)
+{
+    <LoadingSpinner />
+}
+else
+{
+    @if (!IsGameOver)
+    {
+        <div>
+            <h3>Difficulty: @Difficulty</h3>
+            <p>Time Elapsed: @ElapsedTime.Seconds</p>
+            <p>Moves: @Moves</p>
+        </div>
+        <GameBoard Board="Board" OnCardSelected="CardSelected" />
+    }
+    else
+    {
+        <div>
+            <h2>Game Over!</h2>
+            <p>Time Taken: @ElapsedTime.Seconds</p>
+            <p>Total Moves: @Moves</p>
+            <p>Enter your username to save your score:</p>
+            <input @bind="Username" />
+            <button @onclick="SaveScore">Save Score</button>
+        </div>
+    }
+}
+
+@code {
+    [Parameter] public string DifficultyString { get; set; } = string.Empty;
+
+    private GameDifficulty Difficulty { get; set; } = GameDifficulty.Normal;
+    private Board? Board;
+    private DateTime StartedTime;
+    private TimeSpan ElapsedTime;
+    private int Moves = 0;
+    private bool IsMatching = false;
+    private bool IsGameOver = false;
+    private string Username = string.Empty;
+
+    private System.Timers.Timer? Timer;
+
+    private int Score = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Difficulty = SetGameDifficulty(DifficultyString);
+
+        var request = new StartGameRequest { Difficulty = Difficulty };
+        var startResponse = await StartGameHandler.Handle(request);
+
+        Board = startResponse.Board;
+        StartedTime = startResponse.StartedTime;
+
+        Timer = new System.Timers.Timer(1000);
+        Timer.Elapsed += (s, e) => InvokeAsync(UpdateTime);
+        Timer.Start();
+    }
+
+    private async Task CardSelected(Card card)
+    {
+        if (IsMatching)
+        {
+            return;
+        }
+
+        card.SelectCard();
+
+        if (Board!.Cards.Count(c => c.IsSelected) == 2)
+        {
+            Moves++;
+            IsMatching = true;
+            await Task.Delay(1000);
+
+            var firstCard = Board.Cards.First(c => c.IsSelected);
+            var secondCard = Board.Cards.Last(c => c.IsSelected);
+
+            var request = new MatchCardsRequest
+                {
+                    FirstCardId = firstCard.Id,
+                    SecondCardId = secondCard.Id,
+                };
+
+            var response = await MatchCardsHandler.Handle(request);
+
+            if (response.IsMatch)
+            {
+                firstCard.MatchCard();
+                secondCard.MatchCard();
+            }
+            else
+            {
+                firstCard.SelectCard();
+                secondCard.SelectCard();
+            }
+
+            if (Board.Cards.All(c => c.IsMatched))
+            {
+                Timer?.Stop();
+                IsGameOver = true;
+            }
+
+            IsMatching = false;
+        }
+    }
+
+    private async Task SaveScore()
+    {
+        // var request = new FinishGameRequest
+        // {
+        //     StartedTime = StartedTime,
+        //     Moves = Moves
+        // };
+
+        // var response = await FinishGameHandler.Handle(request);
+
+        var request = new SaveScoreRequest
+        {
+            Username = Username,
+            ElapsedTime = ElapsedTime,
+            Moves = Moves,
+            Difficulty = Difficulty,
+        };
+
+        var response = await SaveScoreHandler.Handle(request);
+
+        Score = response.Score;
+
+        // NavigationManager.NavigateTo("/high-scores");
+    }
+
+    private GameDifficulty SetGameDifficulty(string value)
+    {
+        return value.ToLower() switch
+        {
+            "easy" => GameDifficulty.Easy,
+            "hard" => GameDifficulty.Hard,
+            _ => GameDifficulty.Normal
+        };
+    }
+
+    private void UpdateTime()
+    {
+        ElapsedTime = DateTime.UtcNow - StartedTime;
+        StateHasChanged();
+    }
+}

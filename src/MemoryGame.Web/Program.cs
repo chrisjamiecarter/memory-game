@@ -1,3 +1,6 @@
+using MemoryGame.Web.Features.Game.MatchCards;
+using MemoryGame.Web.Features.Game.StartGame;
+using MemoryGame.Web.Features.Scores.SaveScore;
 using MemoryGame.Web.Shared.Components;
 
 namespace MemoryGame.Web;
@@ -10,6 +13,10 @@ public class Program
         // Add services to the container.
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
+
+        builder.Services.AddScoped<MatchCardsHandler>();
+        builder.Services.AddScoped<StartGameHandler>();
+        builder.Services.AddScoped<SaveScoreHandler>();
 
         var app = builder.Build();
 

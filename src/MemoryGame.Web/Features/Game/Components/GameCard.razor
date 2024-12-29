@@ -1,4 +1,4 @@
-﻿<div class="game-card" @onclick="() => OnCardClicked.InvokeAsync(Card)">
+﻿<div class="game-card" @onclick="CardClicked">
     @if(Card != null)
     {
         <div class="game-card-body@(Card.IsSelected ? " selected" : "") @(Card.IsMatched ? " matched" : "")">
@@ -19,5 +19,13 @@
 
 @code {
     [Parameter] public Card? Card { get; set; }
-    [Parameter] public EventCallback<Card> OnCardClicked { get; set; }
+    [Parameter] public EventCallback<Card> OnCardSelected { get; set; }
+
+    private async Task CardClicked()
+    {
+        if (Card is not null && !Card.IsMatched && !Card.IsSelected && OnCardSelected.HasDelegate)
+        {
+            await OnCardSelected.InvokeAsync(Card);
+        }
+    }
 }

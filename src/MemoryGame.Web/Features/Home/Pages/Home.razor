@@ -1,0 +1,31 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@inject NavigationManager NavigationManager
+
+<PageTitle>Memory Game</PageTitle>
+
+<h1>Memory Game</h1>
+
+<InputRadioGroup id="selectDifficulty" @bind-Value="SelectedDifficulty">
+    <InputRadio id="easyDifficulty" Value="GameDifficulty.Easy" />
+    <label for="easyDifficulty">Easy</label>
+    <InputRadio id="normalDifficulty" Value="GameDifficulty.Normal" />
+    <label for="normalDifficulty">Normal</label>
+    <InputRadio id="hardDifficulty" Value="GameDifficulty.Hard" />
+    <label for="hardDifficulty">Hard</label>
+</InputRadioGroup>
+<label for="selectDifficulty">Select Difficulty</label>
+
+<button @onclick="NavigateToGame">Play</button>
+
+<a href="/high-scores">High Scores</a>
+<a href="/how-to-play">How to Play</a>
+
+@code {
+    private GameDifficulty SelectedDifficulty = GameDifficulty.Normal;
+
+    private void NavigateToGame()
+    {
+        NavigationManager.NavigateTo($"/game/{SelectedDifficulty}");
+    }
+}

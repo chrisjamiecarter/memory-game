@@ -1,4 +1,4 @@
-﻿namespace MemoryGame.Web.Enums;
+﻿namespace MemoryGame.Web.Core.Enums;
 
 public enum GameDifficulty
 {

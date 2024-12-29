@@ -1,4 +1,4 @@
-﻿namespace MemoryGame.Web.Models;
+﻿namespace MemoryGame.Web.Core.Models;
 
 public class Card
 {
@@ -34,6 +34,7 @@ public class Card
 
     public void MatchCard()
     {
+        IsSelected = false;
         IsMatched = true;
     }
 }
