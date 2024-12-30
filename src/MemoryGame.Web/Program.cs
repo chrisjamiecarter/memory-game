@@ -1,3 +1,4 @@
+using MemoryGame.Web.Features.Game.FinishGame;
 using MemoryGame.Web.Features.Game.MatchCards;
 using MemoryGame.Web.Features.Game.StartGame;
 using MemoryGame.Web.Features.Scores.SaveScore;
@@ -14,9 +15,10 @@ public class Program
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
+        builder.Services.AddScoped<FinishGameHandler>();
         builder.Services.AddScoped<MatchCardsHandler>();
-        builder.Services.AddScoped<StartGameHandler>();
         builder.Services.AddScoped<SaveScoreHandler>();
+        builder.Services.AddScoped<StartGameHandler>();
 
         var app = builder.Build();
 

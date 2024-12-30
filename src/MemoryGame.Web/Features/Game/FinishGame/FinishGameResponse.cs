@@ -2,7 +2,5 @@
 
 public class FinishGameResponse
 {
-    public TimeSpan TimeElapsed { get; set; }
-
-    public int Moves { get; set; }
+    public int Score { get; set; }
 }
