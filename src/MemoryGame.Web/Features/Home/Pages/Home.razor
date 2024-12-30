@@ -4,22 +4,27 @@
 
 <PageTitle>Memory Game</PageTitle>
 
-<h1>Memory Game</h1>
+<div class="container">
+    <div class="d-inline-flex flex-column gap-3">
+    
+        <button class="btn btn-lg btn-light fw-bold border-white bg-white" @onclick="NavigateToGame">Play</button>
+        <div class="mb-1">
+            <InputRadioGroup id="selectDifficulty" @bind-Value="SelectedDifficulty">
+                <InputRadio id="easyDifficulty" Value="GameDifficulty.Easy" />
+                <label for="easyDifficulty">Easy</label>
+                <InputRadio id="normalDifficulty" Value="GameDifficulty.Normal" />
+                <label for="normalDifficulty">Normal</label>
+                <InputRadio id="hardDifficulty" Value="GameDifficulty.Hard" />
+                <label for="hardDifficulty">Hard</label>
+            </InputRadioGroup>
+        </div>
 
-<InputRadioGroup id="selectDifficulty" @bind-Value="SelectedDifficulty">
-    <InputRadio id="easyDifficulty" Value="GameDifficulty.Easy" />
-    <label for="easyDifficulty">Easy</label>
-    <InputRadio id="normalDifficulty" Value="GameDifficulty.Normal" />
-    <label for="normalDifficulty">Normal</label>
-    <InputRadio id="hardDifficulty" Value="GameDifficulty.Hard" />
-    <label for="hardDifficulty">Hard</label>
-</InputRadioGroup>
-<label for="selectDifficulty">Select Difficulty</label>
+        <a class="btn btn-lg btn-light fw-bold border-white bg-white" href="/high-scores">High Scores</a>
+        <a class="btn btn-lg btn-light fw-bold border-white bg-white" href="/how-to-play">How to Play</a>
 
-<button @onclick="NavigateToGame">Play</button>
+    </div>
+</div>
 
-<a href="/high-scores">High Scores</a>
-<a href="/how-to-play">How to Play</a>
 
 @code {
     private GameDifficulty SelectedDifficulty = GameDifficulty.Normal;

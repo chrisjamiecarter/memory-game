@@ -8,8 +8,6 @@
 
 <PageTitle>Memory Game - Play</PageTitle>
 
-<h1>Memory Game</h1>
-
 @if (Board is null)
 {
     <LoadingSpinner />
@@ -31,6 +29,7 @@ else
             <h2>Game Over!</h2>
             <p>Time Taken: @ElapsedTime.Seconds</p>
             <p>Total Moves: @Moves</p>
+            <p>Final Score: @Score</p>
             <p>Enter your username to save your score:</p>
             <input @bind="Username" />
             <button @onclick="SaveScore">Save Score</button>
