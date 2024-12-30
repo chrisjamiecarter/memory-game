@@ -5,7 +5,7 @@ namespace MemoryGame.Web.Features.Game.StartGame;
 
 public class StartGameHandler
 {
-    private static readonly string[] _symbols = ["!", "$", "%", "*", "@", "#", "|", "~", "=", "+", "&", "£"];
+    private static readonly string[] _symbols = ["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
 
     public Task<StartGameResponse> Handle(StartGameRequest request)
@@ -25,7 +25,7 @@ public class StartGameHandler
 
         return Task.FromResult(new StartGameResponse
         {
-            Board = new Board { Cards = cards }, //, Difficulty = request.Difficulty },
+            Board = new Board { Cards = cards, Difficulty = request.Difficulty },
             StartedTime = DateTime.UtcNow
         });
     }

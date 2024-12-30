@@ -2,6 +2,7 @@
 @rendermode InteractiveServer
 @inject StartGameHandler StartGameHandler
 @inject MatchCardsHandler MatchCardsHandler
+@inject FinishGameHandler FinishGameHandler
 @inject SaveScoreHandler SaveScoreHandler
 @inject NavigationManager NavigationManager
 
@@ -57,15 +58,31 @@ else
     {
         Difficulty = SetGameDifficulty(DifficultyString);
 
+        await StartGame();
+    }
+
+    private async Task StartGame()
+    {
         var request = new StartGameRequest { Difficulty = Difficulty };
-        var startResponse = await StartGameHandler.Handle(request);
+        var response = await StartGameHandler.Handle(request);
 
-        Board = startResponse.Board;
-        StartedTime = startResponse.StartedTime;
+        Board = response.Board;
+        StartedTime = response.StartedTime;
 
-        Timer = new System.Timers.Timer(1000);
+        Timer = new System.Timers.Timer(500);
         Timer.Elapsed += (s, e) => InvokeAsync(UpdateTime);
         Timer.Start();
+    }
+
+    private async Task FinishGame()
+    {
+        Timer?.Stop();
+        IsGameOver = true;
+
+        var request = new FinishGameRequest { Difficulty = Difficulty, ElapsedTime = ElapsedTime, Moves = Moves };
+        var response = await FinishGameHandler.Handle(request);
+
+        Score = response.Score;
     }
 
     private async Task CardSelected(Card card)
@@ -107,8 +124,7 @@ else
 
             if (Board.Cards.All(c => c.IsMatched))
             {
-                Timer?.Stop();
-                IsGameOver = true;
+                await FinishGame();
             }
 
             IsMatching = false;
@@ -117,14 +133,6 @@ else
 
     private async Task SaveScore()
     {
-        // var request = new FinishGameRequest
-        // {
-        //     StartedTime = StartedTime,
-        //     Moves = Moves
-        // };
-
-        // var response = await FinishGameHandler.Handle(request);
-
         var request = new SaveScoreRequest
         {
             Username = Username,
