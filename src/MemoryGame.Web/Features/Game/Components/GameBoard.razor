@@ -1,29 +1,26 @@
-﻿<div class="game-board">
-    @if(Board is null)
-    {
-        <LoadingSpinner />
-    }
-    else
-    {
-        @foreach (var card in Board.Cards)
-        {
-            <GameCard Card="card" OnCardSelected="CardSelected" />
-        }
-    }
-</div>
+﻿@* <div class="game-board"> *@
+@if(Board is null)
+{
+    <LoadingSpinner />
+}
+else
+{
+    <div class="container">
+        <div class="row g-3 justify-content-center">
+            @foreach (var card in Board.Cards)
+            {
+                <div class="col col-3">
+                    <GameCard Card="card" OnCardSelected="CardSelected" />
+                </div>
+            }
+        </div>
+    </div>
+}
+@* </div> *@
 
 @code {
     [Parameter] public Board? Board { get; set; }
     [Parameter] public EventCallback<Card> OnCardSelected { get; set; }
-
-    // private CardModel? FirstCard { get; set; }
-    // private CardModel? SecondCard { get; set; }
-
-    // private int Moves { get; set; } = 0;
-
-    // private bool IsGameOver = false;
-
-    // private bool IsMatching = false;
 
     private async Task CardSelected(Card card)
     {

@@ -89,6 +89,10 @@ h1:focus {
   transform: rotateY(180deg);
 }
 
+.matched {
+  animation: 1s matchAnimation ease-in-out;
+}
+
 .front, .back {
   border: 0.025rem solid #0A0A0A;
   backface-visibility: hidden;
@@ -108,4 +112,13 @@ h1:focus {
 
 .back {
   transform: rotateX(0);
+}
+
+@keyframes matchAnimation {
+  0% {
+    background: #bcffcc;
+  }
+  100% {
+    background: #ffffff;
+  }
 }
