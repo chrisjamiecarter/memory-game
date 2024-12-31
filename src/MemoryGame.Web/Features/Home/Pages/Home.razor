@@ -7,7 +7,9 @@
 <div class="container">
     <div class="d-inline-flex flex-column gap-3">
     
-        <button class="btn btn-lg btn-light fw-bold border-white bg-white" @onclick="NavigateToGame">Play</button>
+        <img class="img-fluid mx-auto d-block memory-game-logo" src="memory-game-logo.png" alt="Memory Game Logo" />
+
+        <button class="btn btn-lg btn-light fw-bold border-white bg-white" type="button" @onclick="NavigateToGame">Play</button>
         <div class="mb-1">
             <InputRadioGroup id="selectDifficulty" @bind-Value="SelectedDifficulty">
                 <InputRadio id="easyDifficulty" Value="GameDifficulty.Easy" />

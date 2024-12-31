@@ -57,6 +57,10 @@
   transform: rotateX(0);
 }
 
+.memory-game-logo {
+  max-width: 10rem;
+}
+
 @keyframes matchAnimation {
   0% {
     background: #bcffcc;
