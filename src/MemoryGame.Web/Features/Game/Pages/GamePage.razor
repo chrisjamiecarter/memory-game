@@ -8,34 +8,36 @@
 
 <PageTitle>Memory Game - Play</PageTitle>
 
-@if (Board is null)
-{
-    <LoadingSpinner />
-}
-else
-{
-    @if (!IsGameOver)
+<div class="container py-3">
+    @if (Board is null)
     {
-        <div>
-            <h3>Difficulty: @Difficulty</h3>
-            <p>Time Elapsed: @ElapsedTime.Seconds</p>
-            <p>Moves: @Moves</p>
-        </div>
-        <GameBoard Board="Board" OnCardSelected="CardSelected" />
+        <LoadingSpinner />
     }
     else
     {
-        <div>
-            <h2>Game Over!</h2>
-            <p>Time Taken: @ElapsedTime.Seconds</p>
-            <p>Total Moves: @Moves</p>
-            <p>Final Score: @Score</p>
-            <p>Enter your username to save your score:</p>
-            <input @bind="Username" />
-            <button @onclick="SaveScore">Save Score</button>
-        </div>
+        @if (!IsGameOver)
+        {
+            <div class="d-flex flex-column justify-content-around flex-md-row">
+                <p>Difficulty: @Difficulty</p>
+                <p>Time Elapsed: @ElapsedTime.Seconds</p>
+                <p>Moves: @Moves</p>
+            </div>
+            <GameBoard Board="Board" OnCardSelected="CardSelected" />
+        }
+        else
+        {
+            <div>
+                <h2>Game Over!</h2>
+                <p>Time Taken: @ElapsedTime.Seconds</p>
+                <p>Total Moves: @Moves</p>
+                <p>Final Score: @Score</p>
+                <p>Enter your username to save your score:</p>
+                <input @bind="Username" />
+                <button @onclick="SaveScore">Save Score</button>
+            </div>
+        }
     }
-}
+</div>
 
 @code {
     [Parameter] public string DifficultyString { get; set; } = string.Empty;

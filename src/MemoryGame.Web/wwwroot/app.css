@@ -2,20 +2,15 @@
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }*/
 
-/*.game-board {
-  position: relative;
-  height: 100%;
-}*/
-
 .game-card {
-  /*float: left;*/
   height: 5rem;
   padding: 0.25rem;
   text-align: center;
   display: block;
   position: relative;
   cursor: pointer;
-  width: 10rem;
+  /*width: 10rem;*/
+  width: 100%;
   z-index: 50;
 }
 
