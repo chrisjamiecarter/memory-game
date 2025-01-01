@@ -1,6 +1,6 @@
-/*html, body {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}*/
+body {
+  font-family: "Press Start 2P", serif !important;
+}
 
 .game-card {
   height: 5rem;
