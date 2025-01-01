@@ -7,7 +7,6 @@ public class StartGameHandler
 {
     private static readonly string[] _symbols = ["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
-
     public Task<StartGameResponse> Handle(StartGameRequest request)
     {
         var pairs = request.Difficulty switch
