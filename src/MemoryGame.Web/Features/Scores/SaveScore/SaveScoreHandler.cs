@@ -24,9 +24,8 @@ public class SaveScoreHandler
         return difficulty switch
         {
             GameDifficulty.Easy => 0.75,
-            GameDifficulty.Normal => 1.0,
             GameDifficulty.Hard => 1.5,
-            _ => throw new ArgumentException("Invalid difficulty.")
+            _ => 1.0,
         };
     }
 }
