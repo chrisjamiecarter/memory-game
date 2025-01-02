@@ -1,5 +1,14 @@
+:root {
+  --gunmetal: #272d2d;
+  --rose-quartz: #a39ba8;
+  --powder-blue: #b8c5d6;
+  --alice-blue: #edf5fc;
+  --emerald: #23ce6b;
+}
+
 body {
   font-family: "Press Start 2P", serif !important;
+  font-size: 0.75rem;
 }
 
 .game-card {
@@ -9,7 +18,7 @@ body {
   display: block;
   position: relative;
   cursor: pointer;
-  /*width: 10rem;*/
+  max-width: 10rem;
   width: 100%;
   z-index: 50;
 }
@@ -20,7 +29,12 @@ body {
   display: block;
   transform-style: preserve-3d;
   transition: .4s ease-in-out;
-  /*background: #F0F0F0;*/
+  background: var(--rose-quartz);
+  color: var(--alice-blue);
+}
+
+.card-image > svg {
+  width: 2rem;
 }
 
 .selected, .matched {
@@ -29,10 +43,11 @@ body {
 
 .matched {
   animation: 1s matchAnimation ease-in-out;
+  background: var(--powder-blue);
 }
 
 .front, .back {
-  border: 0.025rem solid #0A0A0A;
+  border: 0.25rem solid var(--gunmetal);
   backface-visibility: hidden;
   position: absolute;
   top: 0;
@@ -58,9 +73,12 @@ body {
 
 @keyframes matchAnimation {
   0% {
-    background: #bcffcc;
+    background: var(--rose-quartz);
+  }
+  50% {
+    background: var(--emerald);
   }
   100% {
-    background: #ffffff;
+    background: var(--powder-blue);
   }
 }
