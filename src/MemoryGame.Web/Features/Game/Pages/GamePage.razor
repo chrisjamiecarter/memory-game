@@ -17,23 +17,34 @@
     {
         @if (!IsGameOver)
         {
-            <div class="d-flex flex-column justify-content-around flex-md-row">
-                <p>Difficulty: @Difficulty</p>
-                <p>Time Elapsed: @ElapsedTime.Seconds</p>
-                <p>Moves: @Moves</p>
+            <div class="container">
+                <div class="d-flex flex-column justify-content-between justify-content-lg-around flex-md-row">
+                    <p>Difficulty: @Difficulty</p>
+                    <p>Time Elapsed: @ElapsedSeconds</p>
+                    <p>Moves: @Moves</p>
+                </div>
             </div>
             <GameBoard Board="Board" OnCardSelected="CardSelected" />
         }
         else
         {
-            <div>
-                <h2>Game Over!</h2>
-                <p>Time Taken: @ElapsedTime.Seconds</p>
-                <p>Total Moves: @Moves</p>
-                <p>Final Score: @Score</p>
-                <p>Enter your username to save your score:</p>
-                <input @bind="Username" />
-                <button @onclick="SaveScore">Save Score</button>
+            <div class="container">
+                <div class="mb-5">
+                    <h2>Game Over!</h2>
+                </div>
+                <div class="mb-5">
+                    <p>Time Taken: @ElapsedSeconds</p>
+                    <p>Total Moves: @Moves</p>
+                    <p>Final Score: @Score</p>
+                </div>
+                <div class="mb-5">
+                    <p>Enter your username to save your score:</p>
+                    <input @bind="Username" />
+                    <button class="btn btn-outline-light" @onclick="SaveScore">Save Score</button>
+                </div>
+                <div class="mb-5">
+                    <button class="btn btn-outline-light" @onclick="PlayAgain">Play Again</button>
+                </div>
             </div>
         }
     }
@@ -46,6 +57,7 @@
     private Board? Board;
     private DateTime StartedTime;
     private TimeSpan ElapsedTime;
+    private int ElapsedSeconds => Convert.ToInt32(ElapsedTime.TotalSeconds);
     private int Moves = 0;
     private bool IsMatching = false;
     private bool IsGameOver = false;
@@ -67,9 +79,13 @@
         var request = new StartGameRequest { Difficulty = Difficulty };
         var response = await StartGameHandler.Handle(request);
 
+        ElapsedTime = new TimeSpan();
+        IsGameOver = false;
+
         Board = response.Board;
         StartedTime = response.StartedTime;
 
+        Timer?.Dispose();
         Timer = new System.Timers.Timer(500);
         Timer.Elapsed += (s, e) => InvokeAsync(UpdateTime);
         Timer.Start();
@@ -78,6 +94,7 @@
     private async Task FinishGame()
     {
         Timer?.Stop();
+        await Task.Delay(2000);
         IsGameOver = true;
 
         var request = new FinishGameRequest { Difficulty = Difficulty, ElapsedTime = ElapsedTime, Moves = Moves };
@@ -99,7 +116,7 @@
         {
             Moves++;
             IsMatching = true;
-            await Task.Delay(1000);
+            await Task.Delay(500);
 
             var firstCard = Board.Cards.First(c => c.IsSelected);
             var secondCard = Board.Cards.Last(c => c.IsSelected);
@@ -123,6 +140,8 @@
                 secondCard.SelectCard();
             }
 
+            StateHasChanged();
+
             if (Board.Cards.All(c => c.IsMatched))
             {
                 await FinishGame();
@@ -130,6 +149,11 @@
 
             IsMatching = false;
         }
+    }
+
+    private async Task PlayAgain()
+    {
+        await StartGame();
     }
 
     private async Task SaveScore()

@@ -1,30 +1,32 @@
-﻿namespace MemoryGame.Web.Core.Models;
+﻿using MemoryGame.Web.Shared.Components;
+
+namespace MemoryGame.Web.Core.Models;
 
 public class Card
 {
-    private Card(Guid id, string front)
+    private Card(Guid id, Type frontSvg)
     {
         Id = id;
-        Front = front;
-        Back = "?";
+        FrontSvg = frontSvg;
+        BackSvg = typeof(QuestionSvg);
         IsMatched = false;
         IsSelected = false;
     }
 
     public Guid Id { get; private set; }
 
-    public string Front { get; private set; } = "*";
+    public Type FrontSvg { get; private set; }
 
-    public string Back { get; private set; } = "?";
+    public Type BackSvg { get; private set; }
 
     public bool IsMatched { get; private set; }
 
     public bool IsSelected { get; private set; }
 
-    public static Card[] CreatePair(string front)
+    public static Card[] CreatePair(Type frontSvg)
     {
         var id = Guid.NewGuid();
-        return [new Card(id, front), new Card(id, front)];
+        return [new Card(id, frontSvg), new Card(id, frontSvg)];
     }
 
     public void SelectCard()

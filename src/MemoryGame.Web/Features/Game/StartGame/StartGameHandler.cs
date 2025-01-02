@@ -1,24 +1,48 @@
 ﻿ using MemoryGame.Web.Core.Enums;
 using MemoryGame.Web.Core.Models;
+using MemoryGame.Web.Shared.Components;
 
 namespace MemoryGame.Web.Features.Game.StartGame;
 
 public class StartGameHandler
 {
-    private static readonly string[] _symbols = ["A", "B", "C", "D", "E", "F", "G", "H", "J", "K", "L", "M", "N", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+    private static readonly Type[] _svgs = 
+    [
+        typeof(AmazonSvg),
+        typeof(AndroidSvg),
+        typeof(AppleSvg),
+        typeof(DiscordSvg),
+        typeof(GoogleSvg),
+        typeof(InstagramSvg),
+        typeof(MetaSvg),
+        typeof(MicrosoftSvg),
+        typeof(NvidiaSvg),
+        typeof(PlaystationSvg),
+        typeof(RedditSvg),
+        typeof(SnapchatSvg),
+        typeof(SpotifySvg),
+        typeof(SteamSvg),
+        typeof(StravaSvg),
+        typeof(TiktokSvg),
+        typeof(TwitchSvg),
+        typeof(TwitterXSvg),
+        typeof(XboxSvg),
+        typeof(YoutubeSvg),
+    ];
 
     public Task<StartGameResponse> Handle(StartGameRequest request)
     {
+        var shuffledSvgs = _svgs.OrderBy(_ => Random.Shared.Next()).ToList();
+
         var pairs = request.Difficulty switch
         {
             GameDifficulty.Easy => 4,
-            GameDifficulty.Normal => 8,
             GameDifficulty.Hard => 16,
-            _ => throw new ArgumentException("Invalid difficulty")
+            _ => 8,
         };
 
         var cards = Enumerable.Range(1, pairs)
-                              .SelectMany(i => Card.CreatePair(_symbols[i]))
+                              .SelectMany(i => Card.CreatePair(shuffledSvgs[i - 1]))
                               .OrderBy(_ => Random.Shared.Next())
                               .ToList();
 

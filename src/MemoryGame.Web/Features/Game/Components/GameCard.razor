@@ -4,12 +4,12 @@
         <div class="game-card-body@(Card.IsSelected ? " selected" : "") @(Card.IsMatched ? " matched" : "")">
             <div class="front">
                 <div class="card-image">
-                    @Card.Front
+                    <DynamicComponent Type="Card.FrontSvg" />
                 </div>
             </div>
             <div class ="back">
                 <div class="card-image">
-                    @Card.Back
+                    <DynamicComponent Type="Card.BackSvg" />
                 </div>
             </div>
         </div>
