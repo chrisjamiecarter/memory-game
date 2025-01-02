@@ -12,9 +12,9 @@ This is a .NET project designed to demonstrate building a Blazor application tha
 - [x] Your memory game should have a timer.
 - [ ] Once a game is finished it should record the date it was played and the time it took to finish in a "games" table.
 - [x] You should have just one level of difficulty.
-- [ ] Your game should have 9 cards.
+- [x] Your game should have 9 cards.
 - [x] The app should have two main components: the game and the games list.
-- [ ] You shouldn't need a database for the game functionality. All the information about the cards can be in lists in the code base.
+- [x] You shouldn't need a database for the game functionality. All the information about the cards can be in lists in the code base.
 - [ ] Since it only requires basic operations, use Entity Framework for recording game history.
 
 ## Challenges
