@@ -1,10 +1,12 @@
 ﻿using MemoryGame.Web.Core.Enums;
 
-namespace MemoryGame.Web.Features.Scores.SaveScore;
+namespace MemoryGame.Web.Features.Scores.GetHighScores;
 
-public class SaveScoreRequest
+public class HighScore
 {
-    public DateTime DatePlayed { get; set; }
+    public int Rank { get; set; }
+
+    public string Username { get; set; } = string.Empty;
 
     public GameDifficulty Difficulty { get; set; }
 
@@ -14,5 +16,5 @@ public class SaveScoreRequest
 
     public int TotalScore { get; set; }
 
-    public string Username { get; set; } = string.Empty;
+    public DateTime DatePlayed { get; set; }
 }

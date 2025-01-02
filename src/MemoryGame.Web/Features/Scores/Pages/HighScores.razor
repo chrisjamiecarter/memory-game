@@ -1,38 +1,59 @@
 ﻿@page "/high-scores"
-@inject GetScoresHandler GetScoresHandler
+@inject GetHighScoresHandler GetHighScoresHandler
 
-<h1>High Scores</h1>
+<div class="container">
+    <h1 class="mb-5">High Scores</h1>
 
-<table>
-    <thead>
-        <tr>
-            <th>Username</th>
-            <th>Time</th>
-            <th>Moves</th>
-            <th>Difficulty</th>
-        </tr>
-    </thead>
-    <tbody>
-@*         @if (HighScores != null)
-        {
-            @foreach (var score in HighScores)
-            {
+    @if (HighScoreData is null)
+    {
+        <LoadingSpinner />
+    }
+    else
+    {
+        <table class="table table-borderless table-hover table-striped">
+            <thead>
                 <tr>
-                    <td>@score.Username</td>
-                    <td>@score.TimeElapsed</td>
-                    <td>@score.Moves</td>
-                    <td>@score.Difficulty</td>
+                    <th>Rank</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                    <th>Difficulty</th>
                 </tr>
-            }
-        } *@
-    </tbody>
-</table>
+            </thead>
+            <tbody>
+                @foreach (var score in HighScoreData)
+                {
+                    <tr class="@(GetRankClass(score.Rank))">
+                        <td>@score.Rank</td>
+                        <td>@score.Username</td>
+                        <td>@score.TotalScore</td>
+                        <td>@score.Difficulty</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</div>
 
 @code {
-    // private List<Score> HighScores;
+    private IReadOnlyList<HighScore>? HighScoreData;
 
-    // protected override async Task OnInitializedAsync()
-    // {
-    //     HighScores = await GetScoresHandler.Handle(new GetScoresRequest());
-    // }
+    protected override async Task OnInitializedAsync()
+    {
+        var request = new GetHighScoresRequest { AmountOfHighScores = 10 };
+        var response = await GetHighScoresHandler.Handle(request);
+
+        HighScoreData = response.HighScores;
+    }
+
+    private string GetRankClass(int rank)
+    {
+        return rank switch
+        {
+            1 => "first-place",
+            2 => "second-place",
+            3 => "third-place",
+            _ => "",
+        };
+    }
 }

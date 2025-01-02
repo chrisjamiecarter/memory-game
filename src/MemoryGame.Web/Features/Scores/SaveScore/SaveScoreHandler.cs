@@ -1,31 +1,52 @@
-﻿using MemoryGame.Web.Core.Enums;
+﻿using MemoryGame.Web.Core.Models;
+using MemoryGame.Web.Data.Contexts;
+using Microsoft.EntityFrameworkCore;
 
 namespace MemoryGame.Web.Features.Scores.SaveScore;
 
-public class SaveScoreHandler
+public class SaveScoreHandler(IDbContextFactory<MemoryGameDbContext> contextFactory)
 {
-    private readonly static double _basePoints = 10_000.0;
-    private readonly static double _movePenalty = 1.0;
-
-    public Task<SaveScoreResponse> Handle(SaveScoreRequest request)
+    public async Task<SaveScoreResponse> Handle(SaveScoreRequest request)
     {
-        double difficultyMultiplier = GetDifficultyMultiplier(request.Difficulty);
-        double score = Math.Max(_basePoints * difficultyMultiplier / (request.ElapsedTime.TotalSeconds + request.Moves * _movePenalty), 0);
-
-        return Task.FromResult(new SaveScoreResponse
+        try
         {
-            Username = request.Username,
-            Score = Convert.ToInt32(score)
-        });
-    }
+            using var context = await contextFactory.CreateDbContextAsync();
 
-    private static double GetDifficultyMultiplier(GameDifficulty difficulty)
-    {
-        return difficulty switch
+            var score = new Score
+            {
+                Id = Guid.CreateVersion7(),
+                DatePlayed = request.DatePlayed,
+                Difficulty = request.Difficulty,
+                Moves = request.Moves,
+                TimeTakenInSeconds = request.TimeTakenInSeconds,
+                TotalScore = request.TotalScore,
+                Username = request.Username,
+            };
+
+            await context.Scores.AddAsync(score);
+            var result = await context.SaveChangesAsync();
+
+            var isSuccess = result > 0;
+            var message = string.Empty;
+            if (!isSuccess)
+            {
+                message = $"Unable to add score";
+            }
+
+            return new SaveScoreResponse
+            {
+                IsSuccess = isSuccess,
+                Message = message,
+            };
+
+        }
+        catch (Exception exception)
         {
-            GameDifficulty.Easy => 0.75,
-            GameDifficulty.Hard => 1.5,
-            _ => 1.0,
-        };
+            return new SaveScoreResponse
+            {
+                IsSuccess = false,
+                Message = exception.Message,
+            };
+        }
     }
 }

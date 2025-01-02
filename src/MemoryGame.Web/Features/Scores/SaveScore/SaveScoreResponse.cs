@@ -2,7 +2,7 @@
 
 public class SaveScoreResponse
 {
-    public string Username { get; set; } = string.Empty;
-
-    public int Score { get; set; }
+    public bool IsSuccess { get; set; }
+    
+    public string Message { get; set; } = string.Empty;
 }

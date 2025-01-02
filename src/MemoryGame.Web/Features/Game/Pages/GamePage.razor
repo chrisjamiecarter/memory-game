@@ -160,17 +160,17 @@
     {
         var request = new SaveScoreRequest
         {
-            Username = Username,
-            ElapsedTime = ElapsedTime,
-            Moves = Moves,
+            DatePlayed = StartedTime.Date,
             Difficulty = Difficulty,
+            Moves = Moves,
+            TimeTakenInSeconds = ElapsedSeconds,
+            TotalScore = Score,
+            Username = Username,
         };
 
         var response = await SaveScoreHandler.Handle(request);
-
-        Score = response.Score;
-
-        // NavigationManager.NavigateTo("/high-scores");
+        
+        NavigationManager.NavigateTo("/high-scores");
     }
 
     private GameDifficulty SetGameDifficulty(string value)

@@ -71,6 +71,18 @@ body {
   max-width: 10rem;
 }
 
+.first-place > td {
+  color: gold;
+}
+
+.second-place > td {
+  color: silver;
+}
+
+.third-place > td {
+  color: #cd7f32;
+}
+
 @keyframes matchAnimation {
   0% {
     background: var(--rose-quartz);
