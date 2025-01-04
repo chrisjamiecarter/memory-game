@@ -10,24 +10,24 @@
         <img class="img-fluid mx-auto d-block memory-game-logo" src="memory-game-logo.png" alt="Memory Game Logo" />
 
         <button class="btn btn-lg btn-light fw-bold border-white bg-white" type="button" @onclick="NavigateToGame">Play</button>
-        <div class="mb-1">
-            <InputRadioGroup id="selectDifficulty" @bind-Value="SelectedDifficulty">
-                <InputRadio id="easyDifficulty" Value="GameDifficulty.Easy" />
-                <label for="easyDifficulty">Easy</label>
-                <InputRadio id="normalDifficulty" Value="GameDifficulty.Normal" />
-                <label for="normalDifficulty">Normal</label>
-                <InputRadio id="hardDifficulty" Value="GameDifficulty.Hard" />
-                <label for="hardDifficulty">Hard</label>
+        
+        <div class="btn-group">
+            <InputRadioGroup id="selectDifficulty" class="btn-group d-flex flex-column" @bind-Value="SelectedDifficulty">
+                <InputRadio id="easyDifficulty" class="btn-check" Value="GameDifficulty.Easy" />
+                <label for="easyDifficulty" class="btn">Easy</label>
+                <InputRadio id="normalDifficulty" class="btn-check" Value="GameDifficulty.Normal" />
+                <label for="normalDifficulty" class="btn">Normal</label>
+                <InputRadio id="hardDifficulty" class="btn-check" Value="GameDifficulty.Hard" />
+                <label for="hardDifficulty" class="btn">Hard</label>
             </InputRadioGroup>
         </div>
-
+        
         <a class="btn btn-lg btn-light fw-bold border-white bg-white" href="/scores">Scores</a>
         <a class="btn btn-lg btn-light fw-bold border-white bg-white" href="/high-scores">High Scores</a>
         <a class="btn btn-lg btn-light fw-bold border-white bg-white" href="/how-to-play">How to Play</a>
 
     </div>
 </div>
-
 
 @code {
     private GameDifficulty SelectedDifficulty = GameDifficulty.Normal;
