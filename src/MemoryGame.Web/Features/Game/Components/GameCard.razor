@@ -1,7 +1,7 @@
 ﻿<div class="game-card" @onclick="CardClicked">
     @if(Card != null)
     {
-        <div class="game-card-body@(Card.IsSelected ? " selected" : "") @(Card.IsMatched ? " matched" : "")">
+        <div class="game-card-body @(Card.IsSelected ? "selected" : "") @(Card.IsMatched ? "matched" : "")">
             <div class="front">
                 <div class="card-image">
                     <DynamicComponent Type="Card.FrontSvg" />
