@@ -10,27 +10,29 @@
     }
     else
     {
-        <table class="table table-borderless table-hover table-striped">
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Username</th>
-                    <th>Score</th>
-                    <th>Difficulty</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var score in HighScoreData)
-                {
-                    <tr class="@(GetRankClass(score.Rank))">
-                        <td>@score.Rank</td>
-                        <td>@score.Username</td>
-                        <td>@score.Score</td>
-                        <td>@score.Difficulty</td>
+        <div class="table-responsive">
+            <table class="table table-borderless table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Username</th>
+                        <th>Score</th>
+                        <th>Difficulty</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    @foreach (var score in HighScoreData)
+                    {
+                        <tr class="@(GetRankClass(score.Rank))">
+                            <td>@score.Rank</td>
+                            <td>@score.Username</td>
+                            <td>@score.Score</td>
+                            <td>@score.Difficulty</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     }
 
 </div>
@@ -40,7 +42,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        var request = new GetHighScoresRequest { AmountOfHighScores = 10 };
+        var request = new GetHighScoresRequest();
         var response = await GetHighScoresHandler.Handle(request);
 
         HighScoreData = response.HighScores;
