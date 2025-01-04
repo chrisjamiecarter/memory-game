@@ -1,4 +1,4 @@
-﻿namespace MemoryGame.Web.Features.Scores.GetHighScores;
+﻿namespace MemoryGame.Web.Features.HighScores.GetHighScores;
 
 public class GetHighScoresRequest
 {

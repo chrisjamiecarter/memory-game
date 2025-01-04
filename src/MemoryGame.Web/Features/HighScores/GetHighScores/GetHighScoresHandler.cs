@@ -1,7 +1,8 @@
 ﻿using MemoryGame.Web.Data.Contexts;
+using MemoryGame.Web.Features.HighScores.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace MemoryGame.Web.Features.Scores.GetHighScores;
+namespace MemoryGame.Web.Features.HighScores.GetHighScores;
 
 public class GetHighScoresHandler(IDbContextFactory<MemoryGameDbContext> contextFactory)
 {
@@ -18,16 +19,7 @@ public class GetHighScoresHandler(IDbContextFactory<MemoryGameDbContext> context
             .Take(request.AmountOfHighScores)
             .ToListAsync();
 
-        var highScores = scores.Select((s, i) => new HighScore
-        {
-            Rank = i + 1,
-            DatePlayed = s.DatePlayed,
-            Difficulty = s.Difficulty,
-            Moves = s.Moves,
-            TimeTakenInSeconds = s.TimeTakenInSeconds,
-            TotalScore = s.TotalScore,
-            Username = s.Username,
-        }).ToList();
+        var highScores = scores.Select((s, i) => new HighScore(i + 1, s.Username, s.TotalScore, s.Difficulty)).ToList();
 
         return new GetHighScoresResponse { HighScores = highScores };
     }
