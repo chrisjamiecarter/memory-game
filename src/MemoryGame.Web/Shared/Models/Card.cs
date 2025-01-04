@@ -1,6 +1,6 @@
 ﻿using MemoryGame.Web.Shared.Components;
 
-namespace MemoryGame.Web.Core.Models;
+namespace MemoryGame.Web.Shared.Models;
 
 public class Card
 {

@@ -1,5 +1,5 @@
-﻿using MemoryGame.Web.Core.Enums;
-using MemoryGame.Web.Features.Scores.Enums;
+﻿using MemoryGame.Web.Features.Scores.Enums;
+using MemoryGame.Web.Shared.Enums;
 
 namespace MemoryGame.Web.Features.Scores.GetScores;
 

@@ -1,4 +1,4 @@
-﻿using MemoryGame.Web.Core.Enums;
+﻿using MemoryGame.Web.Shared.Enums;
 
 namespace MemoryGame.Web.Features.Scores.SaveScore;
 

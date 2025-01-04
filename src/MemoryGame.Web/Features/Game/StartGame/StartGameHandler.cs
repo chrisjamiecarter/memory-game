@@ -1,6 +1,6 @@
-﻿ using MemoryGame.Web.Core.Enums;
-using MemoryGame.Web.Core.Models;
-using MemoryGame.Web.Shared.Components;
+﻿using MemoryGame.Web.Shared.Components;
+using MemoryGame.Web.Shared.Enums;
+using MemoryGame.Web.Shared.Models;
 
 namespace MemoryGame.Web.Features.Game.StartGame;
 

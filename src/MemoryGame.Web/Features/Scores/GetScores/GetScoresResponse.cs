@@ -1,4 +1,4 @@
-﻿using MemoryGame.Web.Core.Models;
+﻿using MemoryGame.Web.Shared.Models;
 
 namespace MemoryGame.Web.Features.Scores.GetScores;
 

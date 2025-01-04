@@ -1,11 +1,11 @@
-﻿using MemoryGame.Web.Core.Enums;
+﻿using MemoryGame.Web.Shared.Enums;
 
-namespace MemoryGame.Web.Core.Models;
+namespace MemoryGame.Web.Shared.Models;
 
 public class Score
 {
     public required Guid Id { get; set; }
-    
+
     public required string Username { get; set; }
 
     public required GameDifficulty Difficulty { get; set; }

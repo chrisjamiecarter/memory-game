@@ -15,8 +15,6 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
-
         var connectionString = builder.Configuration.GetConnectionString("MemoryGame") ?? throw new InvalidOperationException("Connection string 'MemoryGame' not found.");
         builder.Services.AddDbContextFactory<MemoryGameDbContext>(options => options.UseSqlServer(connectionString));
 
@@ -37,11 +35,9 @@ public class Program
         using var context = services.GetRequiredService<MemoryGameDbContext>();
         context.Database.Migrate();
 
-        // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
             app.UseExceptionHandler("/Error");
-            // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
             app.UseHsts();
         }
 

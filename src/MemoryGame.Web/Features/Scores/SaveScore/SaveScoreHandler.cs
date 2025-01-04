@@ -1,5 +1,5 @@
-﻿using MemoryGame.Web.Core.Models;
-using MemoryGame.Web.Data.Contexts;
+﻿using MemoryGame.Web.Data.Contexts;
+using MemoryGame.Web.Shared.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace MemoryGame.Web.Features.Scores.SaveScore;
