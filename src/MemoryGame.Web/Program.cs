@@ -3,6 +3,7 @@ using MemoryGame.Web.Features.Game.FinishGame;
 using MemoryGame.Web.Features.Game.MatchCards;
 using MemoryGame.Web.Features.Game.StartGame;
 using MemoryGame.Web.Features.HighScores.GetHighScores;
+using MemoryGame.Web.Features.Scores.GetScores;
 using MemoryGame.Web.Features.Scores.SaveScore;
 using MemoryGame.Web.Shared.Components;
 using Microsoft.EntityFrameworkCore;
@@ -24,6 +25,7 @@ public class Program
 
         builder.Services.AddScoped<FinishGameHandler>();
         builder.Services.AddScoped<GetHighScoresHandler>();
+        builder.Services.AddScoped<GetScoresHandler>();
         builder.Services.AddScoped<MatchCardsHandler>();
         builder.Services.AddScoped<SaveScoreHandler>();
         builder.Services.AddScoped<StartGameHandler>();

@@ -83,6 +83,10 @@ body {
   color: #cd7f32;
 }
 
+.sortable {
+  cursor: pointer;
+}
+
 @keyframes matchAnimation {
   0% {
     background: var(--rose-quartz);

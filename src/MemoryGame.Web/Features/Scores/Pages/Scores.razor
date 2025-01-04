@@ -1,0 +1,201 @@
+﻿@page "/scores"
+@rendermode InteractiveServer
+@inject GetScoresHandler GetScoresHandler
+
+<div class="container">
+    <h1 class="mb-5">Scores</h1>
+
+    @if (ScoreData is null)
+    {
+        <LoadingSpinner />
+    }
+    else
+    {
+        <div class="d-lg-flex gap-lg-3">
+            <div class="d-md-flex gap-md-3 flex-md-grow-1">
+                <div class="form-floating mb-3 flex-md-grow-1">
+                    <input id="usernameFilter" class="form-control" type="text" placeholder="Filter by Username" @oninput="ApplyUsernameFilter" />
+                    <label for="usernameFiler">Username</label>
+                </div>
+
+                <div class="form-floating mb-3 flex-md-grow-1">
+                    <select id="difficultyFilter" class="form-select" @onchange="ApplyDifficultyFilter">
+                        <option value="" selected>Select Difficulty</option>
+                        @foreach (GameDifficulty difficulty in Enum.GetValues(typeof(GameDifficulty)))
+                        {
+                            <option value="@difficulty">@difficulty</option>
+                        }
+                    </select>
+                    <label for="difficultyFilter">Difficulty</label>
+                </div>
+            </div>
+            <div class="d-md-flex gap-md-3 flex-md-grow-1">
+                <div class="form-floating mb-3 flex-md-grow-1">
+                    <input id="dateFromFilter" class="form-control" type="date" @onchange="ApplyDateFromFilter" />
+                    <label for="dateFromFilter">Date From</label>
+                </div>
+
+                <div class="form-floating mb-3 flex-md-grow-1">
+                    <input id="dateToFilter" class="form-control" type="date" @onchange="ApplyDateToFilter" />
+                    <label for="dateToFilter">Date To</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-borderless table-hover table-striped">
+                <thead>
+                    <tr>
+                        <th class="sortable align-middle" @onclick="() => SortTable(nameof(Score.Username))">
+                            <div class="d-flex align-items-center justify-content-around">
+                                Username
+                                <DynamicComponent Type="GetSortIcon(nameof(Score.Username))" />
+                            </div>
+                        </th>
+                        <th class="sortable align-middle" @onclick="() => SortTable(nameof(Score.Difficulty))">
+                            <div class="d-flex align-items-center justify-content-around">
+                                Difficulty
+                                <DynamicComponent Type="GetSortIcon(nameof(Score.Difficulty))" />
+                            </div>
+                        </th>
+                        <th class="sortable align-middle" @onclick="() => SortTable(nameof(Score.Moves))">
+                            <div class="d-flex align-items-center justify-content-around">
+                                Moves
+                                <DynamicComponent Type="GetSortIcon(nameof(Score.Moves))" />
+                            </div>
+                        </th>
+                        <th class="sortable align-middle" @onclick="() => SortTable(nameof(Score.TimeTakenInSeconds))">
+                            <div class="d-flex align-items-center justify-content-around">
+                                Time Taken
+                                <DynamicComponent Type="GetSortIcon(nameof(Score.TimeTakenInSeconds))" />
+                            </div>
+                        </th>
+                        <th class="sortable align-middle" @onclick="() => SortTable(nameof(Score.TotalScore))">
+                            <div class="d-flex align-items-center justify-content-around">
+                                Score
+                                <DynamicComponent Type="GetSortIcon(nameof(Score.TotalScore))" />
+                            </div>
+                        </th>
+                        <th class="sortable align-middle" @onclick="() => SortTable(nameof(Score.DatePlayed))">
+                            <div class="d-flex align-items-center justify-content-around">
+                                Played
+                                <DynamicComponent Type="GetSortIcon(nameof(Score.DatePlayed))" />
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var score in ScoreData)
+                    {
+                        <tr>
+                            <td>@score.Username</td>
+                            <td>@score.Difficulty</td>
+                            <td>@score.Moves</td>
+                            <td>@score.TimeTakenInSeconds</td>
+                            <td>@score.TotalScore</td>
+                            <td>@score.DatePlayed.ToShortDateString()</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+
+</div>
+
+@code {
+    private IReadOnlyList<Score>? ScoreData;
+
+    private string? usernameFilter;
+    private GameDifficulty? difficultyFilter;
+    private DateTime? dateFromFilter;
+    private DateTime? dateToFilter;
+    private ScoresOrderBy scoresOrderBy = ScoresOrderBy.DatePlayedDescending;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await GetScoreData();
+        }
+
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    private async Task ApplyUsernameFilter(ChangeEventArgs e)
+    {
+        usernameFilter = string.IsNullOrWhiteSpace(e.Value?.ToString()) ? null : e.Value.ToString()!;
+        await GetScoreData();
+    }
+
+    private async Task ApplyDifficultyFilter(ChangeEventArgs e)
+    {
+        difficultyFilter = string.IsNullOrWhiteSpace(e.Value?.ToString()) ? null : Enum.Parse<GameDifficulty>(e.Value.ToString()!);
+        await GetScoreData();
+    }
+
+    private async Task ApplyDateFromFilter(ChangeEventArgs e)
+    {
+        dateFromFilter = string.IsNullOrWhiteSpace(e.Value?.ToString()) ? null : DateTime.Parse(e.Value.ToString()!);
+        await GetScoreData();
+    }
+
+    private async Task ApplyDateToFilter(ChangeEventArgs e)
+    {
+        dateToFilter = string.IsNullOrWhiteSpace(e.Value?.ToString()) ? null : DateTime.Parse(e.Value.ToString()!);
+        await GetScoreData();
+    }
+
+    private async Task GetScoreData()
+    {
+        var request = new GetScoresRequest
+        {
+            UsernameFilter = usernameFilter,
+            DifficultyFilter = difficultyFilter,
+            DateFromFilter = dateFromFilter,
+            DateToFilter = dateToFilter,
+            OrderBy = scoresOrderBy,
+        };
+
+        var response = await GetScoresHandler.Handle(request);
+
+        ScoreData = response.Scores;
+        StateHasChanged();
+    }
+
+    private async Task SortTable(string columnName)
+    {
+        scoresOrderBy = columnName switch
+        {
+            nameof(Score.Username) => scoresOrderBy == ScoresOrderBy.UsernameAscending ? ScoresOrderBy.UsernameDescending : ScoresOrderBy.UsernameAscending,
+            nameof(Score.Difficulty) => scoresOrderBy == ScoresOrderBy.DifficultyAscending ? ScoresOrderBy.DifficultyDescending : ScoresOrderBy.DifficultyAscending,
+            nameof(Score.Moves) => scoresOrderBy == ScoresOrderBy.MovesAscending ? ScoresOrderBy.MovesDescending : ScoresOrderBy.MovesAscending,
+            nameof(Score.TimeTakenInSeconds) => scoresOrderBy == ScoresOrderBy.TimeTakenInSecondsAscending ? ScoresOrderBy.TimeTakenInSecondsDescending : ScoresOrderBy.TimeTakenInSecondsAscending,
+            nameof(Score.TotalScore) => scoresOrderBy == ScoresOrderBy.TotalScoreAscending ? ScoresOrderBy.TotalScoreDescending : ScoresOrderBy.TotalScoreAscending,
+            nameof(Score.DatePlayed) => scoresOrderBy == ScoresOrderBy.DatePlayedAscending ? ScoresOrderBy.DatePlayedDescending : ScoresOrderBy.DatePlayedAscending,
+            _ => ScoresOrderBy.DatePlayedDescending,
+        };
+
+        await GetScoreData();
+    }
+
+    private Type GetSortIcon(string columnName)
+    {
+        var orderBy = scoresOrderBy.ToString();
+        if (orderBy.Contains(columnName))
+        {
+            if (orderBy.EndsWith("Ascending"))
+            {
+                return typeof(CaretUpFillSvg);
+            }
+            else
+            {
+                return typeof(CaretDownFillSvg);
+            }
+        }
+        else
+        {
+            return typeof(CaretUpDown);
+        }
+    }
+}
