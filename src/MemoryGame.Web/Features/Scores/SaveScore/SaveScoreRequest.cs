@@ -2,6 +2,10 @@
 
 namespace MemoryGame.Web.Features.Scores.SaveScore;
 
+/// <summary>
+/// Represents the request to save a new score, including details such as the date played, 
+/// difficulty level, moves, time taken, total score, and the player's username.
+/// </summary>
 public class SaveScoreRequest
 {
     public DateTime DatePlayed { get; set; }

@@ -2,6 +2,10 @@
 
 namespace MemoryGame.Web.Shared.Models;
 
+/// <summary>
+/// Represents a score entry in the game, including the player's username, difficulty level, 
+/// number of moves, time taken, total score, and the date when the game was played.
+/// </summary>
 public class Score
 {
     public required Guid Id { get; set; }

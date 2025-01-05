@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MemoryGame.Web.Features.Scores.GetScores;
 
+/// <summary>
+/// Handles the retrieval of scores from the database, applying various filters and sorting options 
+/// based on username, difficulty, date, and other score-related criteria.
+/// </summary>
 public class GetScoresHandler(IDbContextFactory<MemoryGameDbContext> contextFactory)
 {
     public async Task<GetScoresResponse> Handle(GetScoresRequest request)

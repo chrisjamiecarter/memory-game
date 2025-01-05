@@ -2,6 +2,10 @@
 
 namespace MemoryGame.Web.Features.Game.FinishGame;
 
+/// <summary>
+/// Handles the game completion logic by calculating the player's score based on 
+/// elapsed time, move count, and game difficulty.
+/// </summary>
 public class FinishGameHandler
 {
     private readonly static double _basePoints = 5_000.0;

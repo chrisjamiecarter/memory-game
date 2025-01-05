@@ -2,6 +2,11 @@
 
 namespace MemoryGame.Web.Shared.Models;
 
+/// <summary>
+/// Represents a card on the game board, with properties for the front and back SVGs, 
+/// selection and matching states, and a unique identifier. Provides methods for creating 
+/// pairs of cards, selecting, and matching cards.
+/// </summary>
 public class Card
 {
     private Card(Guid id, Type frontSvg)

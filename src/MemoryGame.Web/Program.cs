@@ -9,6 +9,11 @@ using MemoryGame.Web.Shared.Components;
 using Microsoft.EntityFrameworkCore;
 
 namespace MemoryGame.Web;
+
+/// <summary>
+/// The entry point for the application.
+/// Configures the required services and middleware before running the application.
+/// </summary>
 public class Program
 {
     public static void Main(string[] args)

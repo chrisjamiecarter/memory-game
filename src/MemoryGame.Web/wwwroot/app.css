@@ -94,9 +94,11 @@ body {
     background: var(--gunmetal);
     color: var(--alice-blue);
   }
+
   50% {
     background: var(--emerald);
   }
+
   100% {
     background: var(--alice-blue);
     color: var(--gunmetal);

@@ -4,6 +4,10 @@ using MemoryGame.Web.Shared.Models;
 
 namespace MemoryGame.Web.Features.Game.StartGame;
 
+/// <summary>
+/// Handles the logic for initializing a new game session by creating a shuffled game board 
+/// with card pairs based on the specified difficulty level.
+/// </summary>
 public class StartGameHandler
 {
     private static readonly Type[] _svgs = 

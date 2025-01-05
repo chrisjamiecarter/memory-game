@@ -4,6 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MemoryGame.Web.Features.Scores.SaveScore;
 
+/// <summary>
+/// Handles the process of saving a new score to the database, including score details 
+/// such as date played, difficulty, moves, time taken, and total score. Returns the success 
+/// status and an optional message.
+/// </summary>
 public class SaveScoreHandler(IDbContextFactory<MemoryGameDbContext> contextFactory)
 {
     public async Task<SaveScoreResponse> Handle(SaveScoreRequest request)

@@ -4,6 +4,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MemoryGame.Web.Features.HighScores.GetHighScores;
 
+/// <summary>
+/// Handles the retrieval of high scores from the database, ordered by score and other criteria, 
+/// and returns the specified number of top results.
+/// </summary>
 public class GetHighScoresHandler(IDbContextFactory<MemoryGameDbContext> contextFactory)
 {
     public async Task<GetHighScoresResponse> Handle(GetHighScoresRequest request)
