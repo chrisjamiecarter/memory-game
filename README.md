@@ -46,11 +46,10 @@ There is an integrated SQL Server database in the back end.
 
 ## Getting Started
 
-**IMPORTANT NOTE**:
-
-The `InitialCreate` database migration has been created.
-
-On start-up of the **Web** application, any required database creation/migrations will be performed.
+> [!NOTE]
+> The `InitialCreate` database migration has been created.
+>
+> On start-up of the **Web** application, any required database creation/migrations will be performed.
 
 ### Prerequisites
 
